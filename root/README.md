@@ -44,7 +44,7 @@ root/
 ### 1️⃣ Backend Setup
 
 ```bash
-cd backend
+cd backend  
 npm install
 
 Create .env file:
