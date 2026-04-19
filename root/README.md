@@ -4,7 +4,7 @@ It is a full-stack AI-powered chat application built using the MERN-inspired arc
 It demonstrates clean separation of frontend and backend, real-time API communication, and persistent chat logging.
 
 
-##  🚀 Features
+##  🚀 Features 
 
 - 💬 Single-turn AI conversation (ask → response)
 - 🧠 Powered by Groq’s `llama-3.1-8b-instant` model
