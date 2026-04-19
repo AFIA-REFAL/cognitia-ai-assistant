@@ -67,3 +67,12 @@ VITE_BACKEND_URL=http://localhost:5000
 Run frontend:
 
 npm run dev
+Full App (Frontend): https://cognitia-ai-assistant-w6sr.vercel.app
+
+(Use this link to access the Chat UI and interact with the AI.)
+
+API (Backend): https://cognitia-ai-assistant.vercel.app
+
+(This is the server handling your data and AI logic.)
+
+GitHub Repository: https://github.com/AFIA-REFAL/cognitia-ai-assistant
