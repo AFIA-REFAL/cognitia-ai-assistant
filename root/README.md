@@ -51,7 +51,7 @@ Create .env file:
 
 MONGODB_URI=your_mongodb_atlas_uri
 GROQ_API_KEY=your_groq_api_key
-FRONTEND_URL=http://localhost:5174
+FRONTEND_URL=http://localhost:5173
 
 Run server:
 
