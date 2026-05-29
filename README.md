@@ -1,1 +1,1 @@
-🤖 COGNITIA – AI-Powered Conversational Assistant
+🤖 COGNITIA – AI-Powered Conversational Assistant      
