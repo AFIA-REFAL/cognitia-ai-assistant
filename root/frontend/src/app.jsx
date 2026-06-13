@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 function App() {
   const [query, setQuery] = useState('');
   const [answer, setAnswer] = useState('');
@@ -14,16 +16,18 @@ function App() {
 
     try {
       const res = await axios.post(
-        import.meta.env.VITE_BACKEND_URL + '/ask',
+        `${BACKEND_URL}/ask`,
         { query }
       );
 
       setAnswer(res.data.answer);
     } catch (err) {
-      setAnswer("Error fetching response");
+      const message = err?.response?.data?.details || err?.response?.data?.error || err?.message || 'Error fetching response';
+      setAnswer(message);
+      console.error('Fetch error:', err);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (

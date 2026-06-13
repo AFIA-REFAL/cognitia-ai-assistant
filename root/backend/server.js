@@ -10,7 +10,7 @@ const app = express();
 
 // 1. Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5174"
+  origin: process.env.FRONTEND_URL || "http://localhost:5173"
 }));
 
 app.use(express.json());
@@ -99,7 +99,7 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📡 CORS allowed for: ${process.env.FRONTEND_URL || "http://localhost:5174"}`);
+  console.log(`📡 CORS allowed for: ${process.env.FRONTEND_URL || "http://localhost:5173"}`);
 });
 
 export default app;
