@@ -25,9 +25,21 @@ const ChatSchema = new mongoose.Schema({
 const Chat = mongoose.model('Chat', ChatSchema);
 
 // 3. MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ MongoDB Connected Successfully"))
-  .catch(err => console.error("❌ MongoDB Connection Error:", err));
+const mongooseOptions = {
+  serverSelectionTimeoutMS: 10000,
+  socketTimeoutMS: 45000,
+  family: 4
+};
+
+const connectMongo = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
+    console.log("✅ MongoDB Connected Successfully");
+  } catch (err) {
+    console.error("❌ MongoDB Connection Error:", err);
+    process.exit(1);
+  }
+};
 
 // 4. Groq AI Setup
 const groq = new Groq({
@@ -43,6 +55,10 @@ app.post('/ask', async (req, res) => {
     return res.status(400).json({ error: "Query is required" });
   }
 
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ error: "Database not connected" });
+  }
+
   try {
     // Call Groq
     const completion = await groq.chat.completions.create({
@@ -55,7 +71,6 @@ app.post('/ask', async (req, res) => {
       model: "llama-3.1-8b-instant"
     });
 
-    // FIXED: correct response extraction
     const responseText = completion?.choices?.[0]?.message?.content;
 
     if (!responseText) {
@@ -97,9 +112,15 @@ app.get('/chats', async (req, res) => {
 // 7. Server Start
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📡 CORS allowed for: ${process.env.FRONTEND_URL || "http://localhost:5173"}`);
+const startServer = () => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📡 CORS allowed for: ${process.env.FRONTEND_URL || "http://localhost:5173"}`);
+  });
+};
+
+connectMongo().then(startServer).catch((err) => {
+  console.error("❌ Failed to start server:", err);
 });
 
 export default app;
