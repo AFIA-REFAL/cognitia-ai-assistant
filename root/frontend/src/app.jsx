@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (typeof window !== 'undefined' && window.location.hostname.endsWith('vercel.app')
+  ? 'https://cognitia-ai-assistant-7kd2v38u4-24wh1a0577-9783s-projects.vercel.app'
+  : 'http://localhost:5000');
 
 function App() {
   const [query, setQuery] = useState('');
