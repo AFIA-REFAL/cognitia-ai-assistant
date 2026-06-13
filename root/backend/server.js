@@ -128,8 +128,35 @@ app.get('/chats', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('OK');
+app.get('/', async (req, res) => {
+  const q = req.query.q;
+
+  // If no query provided, keep the simple health check
+  if (!q) return res.send('OK');
+
+  try {
+    const completion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: 'user',
+          content: q
+        }
+      ],
+      model: 'llama-3.1-8b-instant'
+    });
+
+    const responseText = completion?.choices?.[0]?.message?.content;
+
+    if (!responseText) {
+      return res.status(502).json({ error: 'AI returned empty response' });
+    }
+
+    // Return AI answer (do not save here to keep health endpoint lightweight)
+    res.json({ answer: responseText });
+  } catch (err) {
+    console.error('❌ AI Health Error:', err);
+    res.status(500).json({ error: 'AI request failed', details: err.message });
+  }
 });
 
 // 7. Server Start
