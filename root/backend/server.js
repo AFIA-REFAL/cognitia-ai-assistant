@@ -42,13 +42,18 @@ const mongooseOptions = {
   family: 4
 };
 
+let mongoConnected = false;
+
 const connectMongo = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
+    mongoConnected = true;
     console.log("✅ MongoDB Connected Successfully");
+    return true;
   } catch (err) {
+    mongoConnected = false;
     console.error("❌ MongoDB Connection Error:", err);
-    process.exit(1);
+    return false;
   }
 };
 
@@ -66,8 +71,11 @@ app.post('/ask', async (req, res) => {
     return res.status(400).json({ error: "Query is required" });
   }
 
-  if (mongoose.connection.readyState !== 1) {
-    return res.status(503).json({ error: "Database not connected" });
+  if (!mongoConnected) {
+    const connected = await connectMongo();
+    if (!connected) {
+      return res.status(503).json({ error: "Database not connected" });
+    }
   }
 
   try {
@@ -120,6 +128,10 @@ app.get('/chats', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('OK');
+});
+
 // 7. Server Start
 const PORT = process.env.PORT || 5000;
 
@@ -130,8 +142,14 @@ const startServer = () => {
   });
 };
 
-connectMongo().then(startServer).catch((err) => {
-  console.error("❌ Failed to start server:", err);
-});
+if (process.env.VERCEL) {
+  connectMongo().catch((err) => {
+    console.error("❌ Failed to connect to MongoDB on Vercel:", err);
+  });
+} else {
+  connectMongo().then(startServer).catch((err) => {
+    console.error("❌ Failed to start server:", err);
+  });
+}
 
 export default app;
