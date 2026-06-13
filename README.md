@@ -1,91 +1,133 @@
 # Cognitia AI Assistant
 
-A simple AI-powered conversational assistant with a React frontend and an Express backend.
+An AI-powered conversational assistant built with React, Express, MongoDB, and Groq AI.
 
-## Live Deployment
+## Live Demo
 
-- Backend deployment: [Error](https://cognitia-ai-assistant-7kd2v38u4-24wh1a0577-9783s-projects.vercel.app/)
-- Frontend deployment: [AI Assistant](https://cognitia-ai-assistant-w6sr.vercel.app/)
+* Frontend: https://cognitia-ai-assistant-w6sr.vercel.app
+* Backend API: https://cognitia-ai-assistant-7kd2v38u4-24wh1a0577-9783s-projects.vercel.app
 
 ## Overview
 
-This project includes:
-
-- `root/backend`: Node.js + Express API server
-- `root/frontend`: React app built with Vite
-- MongoDB for chat persistence
-- Groq AI for generating responses
+Cognitia AI Assistant enables users to interact with an AI chatbot through a modern web interface. User conversations are stored in MongoDB and AI responses are generated using Groq's language models.
 
 ## Features
 
-- Send queries from the frontend to the backend
-- Generate AI responses using Groq chat completions
-- Save user queries and AI responses in MongoDB
-- Fetch chat history from the backend
+* AI-powered chat interface
+* Real-time responses using Groq AI
+* MongoDB chat history storage
+* RESTful Express backend
+* Responsive React frontend
 
 ## Tech Stack
 
-- Frontend: React, Vite, Axios
-- Backend: Node.js, Express, Mongoose
-- Database: MongoDB Atlas
-- AI: Groq SDK
+### Frontend
+
+* React
+* Vite
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* Mongoose
+
+### Database
+
+* MongoDB Atlas
+
+### AI Integration
+
+* Groq SDK
 
 ## Project Structure
 
-```
-root/
-  backend/
-    package.json
-    server.js
-    .env
-  frontend/
-    package.json
-    vite.config.js
-    src/
-      app.jsx
-      main.jsx
-      app.css
+```text
+Root/
+├── backend/
+│   ├── package.json
+│   ├── server.js
+│   └── .env
+└── frontend/
+    ├── package.json
+    ├── vite.config.js
+    └── src/
+        ├── App.jsx
+        ├── main.jsx
+        └── App.css
 ```
 
 ## Local Setup
 
-1. Install dependencies for backend and frontend:
+### 1. Install Dependencies
 
 ```bash
-cd root/backend
+cd backend
 npm install
+
 cd ../frontend
 npm install
 ```
 
-2. Create environment files:
+### 2. Configure Environment Variables
 
-- `root/backend/.env`
-  - `MONGODB_URI` - MongoDB connection string
-  - `GROQ_API_KEY` - Groq API key
-  - `FRONTEND_URL` - frontend origin (e.g. `http://localhost:5173`)
+Backend (`backend/.env`)
 
-- `root/frontend/.env`
-  - `VITE_BACKEND_URL=http://localhost:5000`
+```env
+MONGODB_URI=your_mongodb_connection_string
+GROQ_API_KEY=your_groq_api_key
+FRONTEND_URL=http://localhost:5173
+```
 
-3. Run backend and frontend:
+Frontend (`frontend/.env`)
+
+```env
+VITE_BACKEND_URL=http://localhost:5000
+```
+
+### 3. Start the Application
+
+Backend:
 
 ```bash
-cd root/backend
+cd backend
 npm start
+```
 
-cd ../frontend
+Frontend:
+
+```bash
+cd frontend
 npm run dev
 ```
 
-4. Open the frontend app at:
+### 4. Open in Browser
 
 ```text
 http://localhost:5173
 ```
 
+## API Endpoint
+
+### Generate AI Response
+
+```http
+POST /ask
+```
+
+### Fetch Chat History
+
+```http
+GET /history
+```
+
 ## Notes
 
-- If you see CORS issues, verify `FRONTEND_URL` in `root/backend/.env` matches the frontend origin.
-- The backend route for AI requests is `POST /ask`.
+* Ensure MongoDB Atlas is accessible from your deployment environment.
+* Verify CORS settings if frontend requests fail.
+* Make sure environment variables are configured correctly on Vercel.
 
+## Author
+
+Developed as a full-stack AI assistant project using React, Express, MongoDB, and Groq AI.
