@@ -25,12 +25,11 @@ Cognitia AI Assistant enables users to interact with an AI chatbot through a mod
 
 * React
 * Vite
-* Axios
+
 
 ### Backend
 
 * Node.js
-* Express.js
 * Mongoose
 
 ### Database
