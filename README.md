@@ -1,6 +1,6 @@
 # Cognitia AI Assistant
 
-An AI-powered conversational assistant built with React, Express, MongoDB, and Groq AI.
+An AI-powered conversational assistant built with React, Express, MongoDB, and Groq AI.  
   
 ## Live Demo
 
